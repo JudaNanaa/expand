@@ -6,7 +6,7 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:47:05 by marvin            #+#    #+#             */
-/*   Updated: 2024/12/07 00:19:46 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/15 23:54:10 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <string.h>
 # include <strings.h>
 # include <unistd.h>
-# include "ft_printf/ft_printf.h"
 
 typedef struct s_list
 {
@@ -31,6 +30,10 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+// Function
+int					ft_printf(const char *str, ...);
+int					ft_dprintf(int fd, const char *str, ...);
+char				*ft_sprintf(const char *str, ...);
 
 int					count_char(char *str, char char_to_count);
 int					join2d(char **join, char **str1, char **str2);

@@ -6,7 +6,7 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:05:26 by madamou           #+#    #+#             */
-/*   Updated: 2024/12/03 01:05:05 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/15 21:46:07 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_format
 	int				options[6];
 }					t_format;
 
-typedef struct s_data
+typedef struct s_printf
 {
 	char			buffer[MAX_BUFFER];
 	char			*str;

@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 04:05:52 by madamou           #+#    #+#             */
-/*   Updated: 2024/12/15 04:11:07 by madamou          ###   ########.fr       */
+/*   Created: 2024/12/15 22:18:16 by madamou           #+#    #+#             */
+/*   Updated: 2024/12/15 23:47:56 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 
-int main(int argc, char **argv)
+t_data *get_data(void)
 {
-	int i;
+	static t_data data;
+	
+	return (&data);
+}
 
-	argv = expand(&argv[1]);
-	i = 0;
-	while (argv[i])
-	{
-		ft_printf("expand == %s\n", argv[i]);	
-		i++;
-	}
+int get_len_to_next_same_char(char *str, int i, char c)
+{
+	int len;
+
+	len = 1;
+	while (str[i + len] != c)
+		len++;
+	return (len);
 }

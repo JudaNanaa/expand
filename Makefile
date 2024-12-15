@@ -6,7 +6,7 @@
 #    By: madamou <madamou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 16:07:55 by madamou           #+#    #+#              #
-#    Updated: 2024/12/15 04:07:31 by madamou          ###   ########.fr        #
+#    Updated: 2024/12/15 21:34:36 by madamou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,11 @@ C_FLAGS = -Wall -Wextra -Werror -g3
 
 OBJS_DIR = .objets/
 
-SRCS = 	garbage.c lock_unlock.c garbage_utils.c
+GARBAGE = $(addprefix garbage_collector/, garbage.c lock_unlock.c garbage_utils.c)
+
+EXPAND = $(addprefix expand/, expand.c)
+
+SRCS = main.c $(GARBAGE) $(EXPAND)
 
 SRCS := $(SRCS:%=./%)
 
@@ -39,12 +43,17 @@ BAR_SIZE		= 50
 TOTAL_FILES		:= $(words $(SRCS))
 COMPILED_FILES	:= 0
 
-NAME = a.out
+NAME = garbage
 
-all: $(NAME)
+LIBFT = libft.a
+
+all: $(LIBFT) $(NAME)
+
+$(LIBFT) :
+	@make -C libft
 
 $(NAME): $(OBJS)
-	@$(CC) $(C_FLAGS) $^ -o $@
+	@$(CC) $(C_FLAGS) $^ -L libft -lft -o $@
 	@echo
 	@echo "✅$(GREEN)garbage compiled >_$(END)✅"
 $(OBJS_DIR)/%.o : %.c
@@ -70,9 +79,11 @@ $(OBJS_DIR)/%.o : %.c
 	$(CC) $(C_FLAGS) -c -include ./libft.h $< -o $@
 
 clean:
+	@make clean -C libft
 	@rm -rf $(OBJS_DIR)
                                                                              
 fclean: clean
+	@make fclean -C libft
 	@rm -f $(NAME)
 
 re: fclean all
