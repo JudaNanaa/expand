@@ -6,7 +6,7 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:11:51 by madamou           #+#    #+#             */
-/*   Updated: 2024/12/16 03:38:41 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/16 14:55:36 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ char **split_expand(char *to_split)
 		len = 0;
 		while (!is_in_charset(to_split[i + len], " \t") && to_split[i + len])
 		{
-			if (to_split[i + len] == '"')
-				len += len_to_next_char(to_split, i + len, '"') + 1;
-			else if (to_split[i + len] == '\'')
-				len += len_to_next_char(to_split, i + len, '\'') + 1;
+			if (to_split[i + len] == '"' || to_split[i + len] == '\'')
+				len += len_to_next_char(to_split, i + len, to_split[i + len]);
 			else
 				len++;
 		}
@@ -72,7 +70,7 @@ char *extract_variable(char *str, int *start)
 	len = 0;
 	(*start)++;
 	if (str[*start] == '?')
-		return (ft_strdup("?"));
+		return ((*start)++, ft_strdup("?"));
 	while (str[*start + len] && is_variable_char(str[*start + len]))
 		len++;
 	if (len == 0)
@@ -133,7 +131,7 @@ char *dquote_expand(char *to_expand, int *start)
 	dest = ft_substr(to_expand, *start, len);
 	if (dest == NULL)
 		return (NULL);
-	*start += len + 1;
+	*start += len;
 	return (expand_str(dest));
 }
 
@@ -146,7 +144,7 @@ char *quote_expand(char *str, int *start)
 	dest = ft_substr(str, *start, len);
 	if (dest == NULL)
 		return (NULL);
-	*start += len + 1;
+	*start += len;
 	return (dest);
 }
 
@@ -165,7 +163,7 @@ char *normal_expand(char *to_expand, int *start)
 	return (expand_str(dest));
 }
 
-char *remove_quotes(char *str)
+void remove_quotes(char *str)
 {
 	int i;
 	int len;
@@ -178,7 +176,7 @@ char *remove_quotes(char *str)
 		{
 			len = len_to_next_char(str, i,  str[i]);
 			substr = ft_substr(str, i + 1, len - 2);
-			substr = ft_re_strjoin(substr, &str[i + len + 1]);
+			substr = ft_re_strjoin(substr, &str[i + len]);
 			ft_strcpy(&str[i], substr);
 			ft_free(substr);
 			i += len - 2; 
@@ -186,7 +184,6 @@ char *remove_quotes(char *str)
 		else
 			i++;
 	}
-	return str;
 }
 
 void remove_quotes_on_tab(char **tab)
