@@ -6,7 +6,7 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:06:37 by madamou           #+#    #+#             */
-/*   Updated: 2024/12/15 23:50:41 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/16 02:49:40 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_env
 	char *key;
 	char *value;
 	struct s_env *next;
+	struct s_env *prev;
 }t_env;
 
 typedef struct s_data
@@ -31,7 +32,8 @@ typedef struct s_data
 }t_data;
 
 char **expand(char **args);
-int get_len_to_next_same_char(char *str, int i, char c);
+int len_to_next_char(char *str, int i, char c);
 t_data *get_data(void);
+t_env	*env_in_struct(char **envp);
 
 #endif

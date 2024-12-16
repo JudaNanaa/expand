@@ -6,7 +6,7 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:47:05 by marvin            #+#    #+#             */
-/*   Updated: 2024/12/15 23:54:10 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/16 02:50:04 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ typedef struct s_list
 int					ft_printf(const char *str, ...);
 int					ft_dprintf(int fd, const char *str, ...);
 char				*ft_sprintf(const char *str, ...);
+char				*get_next_line(int fd);
 
+int					add_string_char_2d(char ***tabb, char *str);
 int					count_char(char *str, char char_to_count);
 int					join2d(char **join, char **str1, char **str2);
 int					ft_atoi(const char *str);
@@ -52,7 +54,7 @@ int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_printf(const char *str, ...);
 int					ft_strcmp(const char *s1, const char *s2);
 int					free_split(char **split);
-int					ft_is_in_charset(char c, const char *set);
+int					is_in_charset(char c, const char *set);
 
 char				**strdup2d(char **str);
 char				**str2d_join(char **str1, char **str2);
@@ -81,7 +83,6 @@ char				*ft_re_strjoin(const char *s1, const char *s2);
 char				*str_join_2d(char **str_2d, char *sep);
 char				*str_join_2d_and_free(char **str_2d, char *sep);
 char				*read_file(int fd);
-char				*get_next_line(int fd);
 
 void				*ft_memset(void *s, int c, size_t n);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
@@ -89,7 +90,6 @@ void				*ft_memmove(void *dest, const void *src, size_t n);
 void				*ft_memchr(const void *s, int c, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);
 
-void				free_2d(char **to_free);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putchar(char c);
 void				ft_putendl_fd(char *s, int fd);

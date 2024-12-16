@@ -6,7 +6,7 @@
 #    By: madamou <madamou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 16:07:55 by madamou           #+#    #+#              #
-#    Updated: 2024/12/03 01:19:26 by madamou          ###   ########.fr        #
+#    Updated: 2024/12/16 02:13:08 by madamou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRCS = 	count_char.c free_split.c ft_atoi.c ft_bzero.c \
 		ft_strmapi.c ft_strncmp.c ft_strncpy.c ft_strnew.c ft_strnstr.c ft_strrchr.c \
 		ft_strstr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c get_next_line_bonus.c \
 		get_next_line_utils_bonus.c join2d.c read_file.c sort_str2d.c \
-		str_join_2d.c str2d_join.c strdup2d.c $(FT_PRINTF)
+		str_join_2d.c str2d_join.c strdup2d.c add_string_char_2d.c $(FT_PRINTF)
 
 SRCS := $(SRCS:%=./%)
 

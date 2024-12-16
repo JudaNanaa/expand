@@ -6,7 +6,7 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 06:52:03 by madamou           #+#    #+#             */
-/*   Updated: 2024/12/03 00:32:30 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/16 02:13:58 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	**str2d_join(char **str1, char **str2)
 		return (str2 = strdup2d(str1), str2);
 	if (str1 == NULL && str2 != NULL)
 		return (str1 = strdup2d(str2), str1);
-	join = malloc(sizeof(char *)
-			* (ft_strlen_2d(str1) + ft_strlen_2d(str2) + 1));
+	join = malloc(sizeof(char *) * (ft_strlen_2d(str1) + ft_strlen_2d(str2)
+				+ 1));
 	if (join == NULL)
 		return (NULL);
 	if (join2d(join, str1, str2) == EXIT_FAILURE)
@@ -38,14 +38,14 @@ char	**re_str2djoin(char **str1, char **str2)
 	if (str1 == NULL && str2 == NULL)
 		return (NULL);
 	if (str2 == NULL && str1 != NULL)
-		return (str2 = strdup2d(str1), free_2d(str1), str2);
+		return (str2 = strdup2d(str1), free_split(str1), str2);
 	if (str1 == NULL && str2 != NULL)
 		return (strdup2d(str2));
-	join = malloc(sizeof(char *)
-			* (ft_strlen_2d(str1) + ft_strlen_2d(str2) + 1));
+	join = malloc(sizeof(char *) * (ft_strlen_2d(str1) + ft_strlen_2d(str2)
+				+ 1));
 	if (join == NULL)
-		return (free_2d(str1), NULL);
+		return (free_split(str1), NULL);
 	if (join2d(join, str1, str2) == EXIT_FAILURE)
-		return (free_2d(str1), NULL);
-	return (free_2d(str1), join);
+		return (free_split(str1), NULL);
+	return (free_split(str1), join);
 }

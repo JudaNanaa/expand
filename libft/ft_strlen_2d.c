@@ -6,7 +6,7 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 02:44:08 by madamou           #+#    #+#             */
-/*   Updated: 2024/12/03 00:32:16 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/16 02:21:32 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strlen_2d(char **tab)
 	int	i;
 
 	i = 0;
+	if (tab == NULL)
+		return (0);
 	while (tab[i])
 		i++;
 	return (i);

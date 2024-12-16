@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions3.c                                       :+:      :+:    :+:   */
+/*   str_join_2d.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 20:02:12 by madamou           #+#    #+#             */
-/*   Updated: 2024/12/02 02:53:58 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/16 02:13:58 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ char	*str_join_2d_and_free(char **str_2d, char *sep)
 	if (str_2d == NULL)
 		return (NULL);
 	str = str_join_2d(str_2d, sep);
-	free_2d(str_2d);
+	free_split(str_2d);
 	return (str);
 }

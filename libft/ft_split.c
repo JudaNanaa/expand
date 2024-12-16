@@ -6,7 +6,7 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 15:06:54 by marvin            #+#    #+#             */
-/*   Updated: 2024/12/07 00:05:14 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/16 02:50:04 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ static int	ft_count_word(char const *s, char *c)
 	i = 0;
 	while (s[i])
 	{
-		while (s[i] && ft_is_in_charset(s[i], c))
+		while (s[i] && is_in_charset(s[i], c))
 			i++;
-		while (s[i] && !ft_is_in_charset(s[i], c))
+		while (s[i] && !is_in_charset(s[i], c))
 			i++;
 		cpt++;
 	}
 	if (i == 0)
 		return (0);
-	if (ft_is_in_charset(s[i - 1], c))
+	if (is_in_charset(s[i - 1], c))
 		cpt--;
 	return (cpt);
 }
@@ -45,15 +45,15 @@ static int	ft_split_words(char **split, char const *s, char *c)
 	index = 0;
 	while (s[i])
 	{
-		while (ft_is_in_charset(s[i], c) && s[i])
+		while (is_in_charset(s[i], c) && s[i])
 			i++;
 		j = 0;
-		while (!ft_is_in_charset(s[i], c) && s[i])
+		while (!is_in_charset(s[i], c) && s[i])
 		{
 			i++;
 			j++;
 		}
-		if (!ft_is_in_charset(s[i - 1], c))
+		if (!is_in_charset(s[i - 1], c))
 		{
 			split[index] = ft_substr(s, i, j);
 			if (split[index] == NULL)

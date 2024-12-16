@@ -6,7 +6,7 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:11:51 by madamou           #+#    #+#             */
-/*   Updated: 2024/12/15 23:53:33 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/16 03:38:41 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,29 @@
 char **split_expand(char *to_split)
 {
 	char **split;
+	int i;
+	int len;
 
+	i = 0;
+	split = NULL;
+	while (to_split[i])
+	{
+		while (is_in_charset(to_split[i], " \t") == true && to_split[i])
+			i++;
+		len = 0;
+		while (!is_in_charset(to_split[i + len], " \t") && to_split[i + len])
+		{
+			if (to_split[i + len] == '"')
+				len += len_to_next_char(to_split, i + len, '"') + 1;
+			else if (to_split[i + len] == '\'')
+				len += len_to_next_char(to_split, i + len, '\'') + 1;
+			else
+				len++;
+		}
+		if (!is_in_charset(to_split[i + len - 1], " \t"))
+			add_string_char_2d(&split, ft_substr(to_split, i, len));
+		i += len;
+	}
 	return (split);
 }
 
@@ -37,13 +59,8 @@ void add_until_dollard(char **dest, char *str, int *i)
 	while (str[*i + len] && str[*i + len] != '$')
 		len++;
 	substr = ft_substr(str, *i, len);
-	if (dest == NULL)
-		*dest = substr;
-	else
-	{
-		*dest = ft_re_strjoin(*dest, substr);
-		ft_free(substr);
-	}
+	*dest = ft_re_strjoin(*dest, substr);
+	ft_free(substr);
 	*i += len;
 }
 
@@ -54,7 +71,7 @@ char *extract_variable(char *str, int *start)
 
 	len = 0;
 	(*start)++;
-	if (str[*start + 1] == '?')
+	if (str[*start] == '?')
 		return (ft_strdup("?"));
 	while (str[*start + len] && is_variable_char(str[*start + len]))
 		len++;
@@ -101,10 +118,10 @@ char *expand_str(char *str)
 			return (dest);
 		variable = extract_variable(str, &i);
 		variable = expand_variable(variable);
-		ft_re_strjoin(dest, variable);
+		dest = ft_re_strjoin(dest, variable);
 		ft_free(variable);
 	}
-	return (NULL);
+	return (dest);
 }
 
 char *dquote_expand(char *to_expand, int *start)
@@ -112,7 +129,7 @@ char *dquote_expand(char *to_expand, int *start)
 	char *dest;
 	int len;
 
-	len = get_len_to_next_same_char(to_expand, *start, '"');
+	len = len_to_next_char(to_expand, *start, '"');
 	dest = ft_substr(to_expand, *start, len);
 	if (dest == NULL)
 		return (NULL);
@@ -125,7 +142,7 @@ char *quote_expand(char *str, int *start)
 	char *dest;
 	int len;
 
-	len = get_len_to_next_same_char(str, *start, '\'');
+	len = len_to_next_char(str, *start, '\'');
 	dest = ft_substr(str, *start, len);
 	if (dest == NULL)
 		return (NULL);
@@ -148,11 +165,50 @@ char *normal_expand(char *to_expand, int *start)
 	return (expand_str(dest));
 }
 
+char *remove_quotes(char *str)
+{
+	int i;
+	int len;
+	char *substr;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			len = len_to_next_char(str, i,  str[i]);
+			substr = ft_substr(str, i + 1, len - 2);
+			substr = ft_re_strjoin(substr, &str[i + len + 1]);
+			ft_strcpy(&str[i], substr);
+			ft_free(substr);
+			i += len - 2; 
+		}
+		else
+			i++;
+	}
+	return str;
+}
+
+void remove_quotes_on_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	if (tab == NULL)
+		return;
+	while (tab[i])
+	{
+		remove_quotes(tab[i]);
+		i++;
+	}
+}
+
 char **expand_word(char *word)
 {
 	char *result;
 	char *dest;
 	int start;
+	char **tab;
 
 	start = 0;
 	result = NULL;
@@ -163,10 +219,12 @@ char **expand_word(char *word)
 		else if (word[start] == '\'')
 			dest = quote_expand(word, &start);
 		else
-			dest = quote_expand(word, &start);
+			dest = normal_expand(word, &start);
 		result = ft_re_strjoin(result, dest);
 	}
-	return split_expand(result);
+	tab = split_expand(result);
+	remove_quotes_on_tab(tab);
+	return tab;
 }
 
 char **expand(char **args)

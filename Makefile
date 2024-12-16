@@ -6,7 +6,7 @@
 #    By: madamou <madamou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 16:07:55 by madamou           #+#    #+#              #
-#    Updated: 2024/12/15 21:34:36 by madamou          ###   ########.fr        #
+#    Updated: 2024/12/16 02:44:11 by madamou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJS_DIR = .objets/
 
 GARBAGE = $(addprefix garbage_collector/, garbage.c lock_unlock.c garbage_utils.c)
 
-EXPAND = $(addprefix expand/, expand.c)
+EXPAND = $(addprefix expand/, expand.c utils.c env.c)
 
 SRCS = main.c $(GARBAGE) $(EXPAND)
 
@@ -43,7 +43,7 @@ BAR_SIZE		= 50
 TOTAL_FILES		:= $(words $(SRCS))
 COMPILED_FILES	:= 0
 
-NAME = garbage
+NAME = a.out
 
 LIBFT = libft.a
 

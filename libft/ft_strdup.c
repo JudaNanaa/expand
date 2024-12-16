@@ -14,7 +14,7 @@
 
 char	*ft_strdup(const char *src)
 {
-	char				*dest;
+	char	*dest;
 
 	if (src == NULL)
 		return (NULL);

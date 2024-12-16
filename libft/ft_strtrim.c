@@ -6,7 +6,7 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 15:07:11 by marvin            #+#    #+#             */
-/*   Updated: 2024/12/06 23:47:17 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/16 02:50:04 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static int	malloc_size(char const *s1, char const *sep)
 	len_s = ft_strlen(s1);
 	i = 0;
 	j = 0;
-	while (ft_is_in_charset(s1[i], sep) == 1 && s1[i])
+	while (is_in_charset(s1[i], sep) == 1 && s1[i])
 		i++;
-	while (len_s - 1 - j >= 0 && ft_is_in_charset(s1[len_s - 1 - j], sep) == 1)
+	while (len_s - 1 - j >= 0 && is_in_charset(s1[len_s - 1 - j], sep) == 1)
 		j++;
 	if (len_s - (i + j) <= 0)
 		return (0);
@@ -41,9 +41,9 @@ static void	ft_fill_str(char const *s1, char *str, char const *sep)
 	k = 0;
 	i = 0;
 	j = 0;
-	while (ft_is_in_charset(s1[i], sep) == 1 && s1[i])
+	while (is_in_charset(s1[i], sep) == 1 && s1[i])
 		i++;
-	while (len_s - 1 - j >= 0 && ft_is_in_charset(s1[len_s - 1 - j], sep) == 1)
+	while (len_s - 1 - j >= 0 && is_in_charset(s1[len_s - 1 - j], sep) == 1)
 		j++;
 	while (i < len_s - j)
 		str[k++] = s1[i++];

@@ -6,13 +6,13 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:56:16 by madamou           #+#    #+#             */
-/*   Updated: 2024/12/02 03:16:45 by madamou          ###   ########.fr       */
+/*   Updated: 2024/12/16 02:53:46 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	is_in_charset(char c, char *str, int str_base)
+int	is_in_charset_base(char c, char *str, int str_base)
 {
 	int	i;
 
@@ -57,7 +57,7 @@ int	ft_atoi_base(const char *str, int str_base)
 		if (str[0] == '-')
 			sign = -1;
 	}
-	while (is_in_charset(str[index], base, str_base) == 1)
+	while (is_in_charset_base(str[index], base, str_base) == 1)
 	{
 		result = result * str_base;
 		result = result + index_in_base(base, str[index]);

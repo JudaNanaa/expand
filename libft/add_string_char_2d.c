@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   join2d.c                                           :+:      :+:    :+:   */
+/*   add_string_char_2d.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 02:50:28 by madamou           #+#    #+#             */
-/*   Updated: 2024/12/16 02:13:58 by madamou          ###   ########.fr       */
+/*   Created: 2024/12/16 02:05:39 by madamou           #+#    #+#             */
+/*   Updated: 2024/12/16 02:21:41 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	join2d(char **join, char **str1, char **str2)
+int	add_string_char_2d(char ***tabb, char *str)
 {
-	int	i;
-	int	j;
+	char	**new;
+	int		i;
+	char	**buff;
 
-	i = -1;
-	j = -1;
-	while (str1[++i] != NULL)
+	buff = *tabb;
+	new = malloc(sizeof(char *) * (ft_strlen_2d(buff) + 1 + 1));
+	if (!new)
+		return (-1);
+	i = 0;
+	while (buff && buff[i])
 	{
-		join[++j] = ft_strdup(str1[i]);
-		if (join[j] == NULL)
-			return (free_split(join), EXIT_FAILURE);
+		new[i] = buff[i];
+		i++;
 	}
-	i = -1;
-	while (str2[++i] != NULL)
-	{
-		join[++j] = ft_strdup(str2[i]);
-		if (join[j] == NULL)
-			return (free_split(join), EXIT_FAILURE);
-	}
-	join[++j] = NULL;
-	return (EXIT_SUCCESS);
+	new[i] = str;
+	new[++i] = NULL;
+	free(buff);
+	*tabb = new;
+	return (0);
 }
