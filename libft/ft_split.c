@@ -6,7 +6,7 @@
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 15:06:54 by marvin            #+#    #+#             */
-/*   Updated: 2024/12/16 02:50:04 by madamou          ###   ########.fr       */
+/*   Updated: 2025/03/10 18:00:51 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,15 @@ static int	ft_split_words(char **split, char const *s, char *c)
 		while (is_in_charset(s[i], c) && s[i])
 			i++;
 		j = 0;
-		while (!is_in_charset(s[i], c) && s[i])
-		{
-			i++;
+		while (!is_in_charset(s[i + j], c) && s[i + j])
 			j++;
-		}
-		if (!is_in_charset(s[i - 1], c))
+		if (!is_in_charset(s[i + j - 1], c))
 		{
 			split[index] = ft_substr(s, i, j);
 			if (split[index] == NULL)
 				return (free_split(split), 0);
+			index++;
+			i += j;
 		}
 	}
 	split[index] = 0;

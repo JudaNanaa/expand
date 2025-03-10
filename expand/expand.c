@@ -5,41 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: madamou <madamou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 04:11:51 by madamou           #+#    #+#             */
-/*   Updated: 2024/12/16 14:55:36 by madamou          ###   ########.fr       */
+/*   Created: 2024/12/16 14:59:43 by madamou           #+#    #+#             */
+/*   Updated: 2025/03/10 18:04:39 by madamou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
-#include <stdbool.h>
-#include <time.h>
-
-char **split_expand(char *to_split)
-{
-	char **split;
-	int i;
-	int len;
-
-	i = 0;
-	split = NULL;
-	while (to_split[i])
-	{
-		while (is_in_charset(to_split[i], " \t") == true && to_split[i])
-			i++;
-		len = 0;
-		while (!is_in_charset(to_split[i + len], " \t") && to_split[i + len])
-		{
-			if (to_split[i + len] == '"' || to_split[i + len] == '\'')
-				len += len_to_next_char(to_split, i + len, to_split[i + len]);
-			else
-				len++;
-		}
-		if (!is_in_charset(to_split[i + len - 1], " \t"))
-			add_string_char_2d(&split, ft_substr(to_split, i, len));
-		i += len;
-	}
-	return (split);
-}
 
 bool is_variable_char(char c)
 {
@@ -128,7 +99,7 @@ char *dquote_expand(char *to_expand, int *start)
 	int len;
 
 	len = len_to_next_char(to_expand, *start, '"');
-	dest = ft_substr(to_expand, *start, len);
+	dest = ft_substr(to_expand, *start + 1, len - 2);
 	if (dest == NULL)
 		return (NULL);
 	*start += len;
@@ -141,7 +112,7 @@ char *quote_expand(char *str, int *start)
 	int len;
 
 	len = len_to_next_char(str, *start, '\'');
-	dest = ft_substr(str, *start, len);
+	dest = ft_substr(str, *start + 1, len - 2);
 	if (dest == NULL)
 		return (NULL);
 	*start += len;
@@ -163,49 +134,13 @@ char *normal_expand(char *to_expand, int *start)
 	return (expand_str(dest));
 }
 
-void remove_quotes(char *str)
-{
-	int i;
-	int len;
-	char *substr;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '"' || str[i] == '\'')
-		{
-			len = len_to_next_char(str, i,  str[i]);
-			substr = ft_substr(str, i + 1, len - 2);
-			substr = ft_re_strjoin(substr, &str[i + len]);
-			ft_strcpy(&str[i], substr);
-			ft_free(substr);
-			i += len - 2; 
-		}
-		else
-			i++;
-	}
-}
-
-void remove_quotes_on_tab(char **tab)
-{
-	int i;
-
-	i = 0;
-	if (tab == NULL)
-		return;
-	while (tab[i])
-	{
-		remove_quotes(tab[i]);
-		i++;
-	}
-}
 
 char **expand_word(char *word)
 {
 	char *result;
 	char *dest;
 	int start;
-	char **tab;
+	char **tabb;
 
 	start = 0;
 	result = NULL;
@@ -219,9 +154,8 @@ char **expand_word(char *word)
 			dest = normal_expand(word, &start);
 		result = ft_re_strjoin(result, dest);
 	}
-	tab = split_expand(result);
-	remove_quotes_on_tab(tab);
-	return tab;
+	tabb = ft_split(result, " \t");
+	return tabb;
 }
 
 char **expand(char **args)
